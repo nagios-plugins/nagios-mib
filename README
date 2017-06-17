@@ -1,6 +1,26 @@
+NAGIOS-MIB
+==========
+
 This is the initial set of MIBs for Nagios to allow traps sent from Nagios to
 be recognized by other NMSes.
 
-Feedback should be directed to the nagiosplug-devel list at http://nagiosplugins.org/mailinglists
+Feedback should be directed to the (Nagios Plugin Development Forum)[https://support.nagios.com/forum/viewforum.php?f=35].
 
+Installation
+------------
 
+Once you've downloaded the MIB package, you'll need to install libsmi. If you're running RHEL/Cent, this is as easy as
+
+    yum install -y libsmi
+
+Now that you have the proper dependencies, you can run
+
+    make all && make install
+
+* `make all` will run `smistrip` on the modules themselves. Alternatively, you can run `make all && make test` to ensure that the modules were built successfully.
+
+* `make install` will attempt to locate your MIB directory automatically to copy the modules.
+
+If for some reason `make install` fails, you can simply copy the MIBs to their proper location with the following command:
+
+    cp ./MIB/* /path/to/your/mibs/
