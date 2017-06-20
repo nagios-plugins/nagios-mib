@@ -1,0 +1,8 @@
+before_install:
+  - yum install -y libsmi
+
+script:
+  - make all && make install
+
+after_failure:
+  - cp ./MIB/* /path/to/your/mibs/
