@@ -13,10 +13,7 @@ before_install:
   - sudo service docker restart
   - sleep 5
   - sudo docker pull centos:centos${OS_VERSION}
-  - sudo docker run centos:centos${OS_VERSION} /bin/sh -c "yum install -y libsmi"
+  - sudo docker run centos:centos${OS_VERSION} yum install -y libsmi
   
 script:
-- make all && make test
-
-after_failure:
-  - cp ./MIB/* /path/to/your/mibs/
+  - make all && make test
