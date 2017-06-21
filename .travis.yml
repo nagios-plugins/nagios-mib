@@ -1,8 +1,22 @@
-before_install:
-  - yum install -y libsmi
 
+sudo: required
+env:
+  matrix:
+  - OS_TYPE=centos OS_VERSION=7
+  
+services:
+  - docker
+  
+before_install:
+  - sudo apt-get update
+  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart
+  - sleep 5
+  - sudo docker pull centos:centos${OS_VERSION}
+  - sudo docker run centos:centos${OS_VERSION} /bin/sh -c "yum install -y libsmi"
+  
 script:
-  - make all && make install
+- make all && make test
 
 after_failure:
   - cp ./MIB/* /path/to/your/mibs/
