@@ -16,5 +16,9 @@ before_install:
   - sudo docker run centos:centos${OS_VERSION} yum install -y libsmi
   
 script:
-  - cd nagios-mib
-  - make all && make test
+  - DOCKER_CONTAINER_ID=$(docker ps | grep centos | awk '{print $1}')
+  - echo ${DOCKER_CONTAINER_ID}
+  - sudo docker exec -ti $DOCKER_CONTAINER_ID /bin/sh -c "cd nagios-mib; make all && make test"
+  - docker ps -a
+  - docker stop $DOCKER_CONTAINER_ID
+  - docker rm -v $DOCKER_CONTAINER_ID
