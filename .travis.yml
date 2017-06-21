@@ -16,4 +16,5 @@ before_install:
   - sudo docker run centos:centos${OS_VERSION} yum install -y libsmi
   
 script:
+  - cd nagios-mib
   - make all && make test
