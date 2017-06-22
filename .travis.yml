@@ -1,0 +1,24 @@
+
+sudo: required
+env:
+  matrix:
+  - OS_TYPE=centos OS_VERSION=7
+  
+services:
+  - docker
+  
+before_install:
+  - sudo apt-get update
+  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart
+  - sleep 5
+  - sudo docker pull centos:centos${OS_VERSION}
+  - sudo docker run centos:centos${OS_VERSION} yum install -y libsmi
+  
+script:
+  - DOCKER_CONTAINER_ID=$(docker ps | grep centos | awk '{print $1}')
+  - echo ${DOCKER_CONTAINER_ID}
+  - sudo docker exec -ti $DOCKER_CONTAINER_ID /bin/sh -c "cd nagios-mib; make all && make test"
+  - docker ps -a
+  - docker stop $DOCKER_CONTAINER_ID
+  - docker rm -v $DOCKER_CONTAINER_ID
