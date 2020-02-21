@@ -10,16 +10,16 @@ install:
 	@if [ -d /usr/share/snmp/mibs ]; then \
 		cp ./MIB/* /usr/share/snmp/mibs; \
 		echo "MIBs copied to /usr/share/snmp/mibs"; \
-	elseif [ -d /usr/share/mibs ]; then \
+	elif [ -d /usr/share/mibs ]; then \
 		cp ./MIB/* /usr/share/mibs; \
 		echo "MIBs copied to /usr/share/mibs"; \
-	elseif [ -d /usr/local/share/snmp/mibs ]; then \
+	elif [ -d /usr/local/share/snmp/mibs ]; then \
 		cp ./MIB/* /usr/local/share/snmp/mibs; \
 		echo "MIBs copied to /usr/local/share/snmp/mibs"; \
-	elseif [ -d /usr/local/share/mibs ]; then \
+	elif [ -d /usr/local/share/mibs ]; then \
 		cp ./MIB/* /usr/local/share/mibs; \
 		echo "MIBs copied to /usr/local/share/mibs"; \
-	elseif [ -d $HOME/.snmp/mibs ]; then \
+	elif [ -d $HOME/.snmp/mibs ]; then \
 		cp ./MIB/* $HOME/.snmp/mibs; \
 		echo "MIBs copied to $HOME/.snmp/mibs"; \
 	fi
